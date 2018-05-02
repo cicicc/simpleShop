@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<c3p0-config>
+
+    <default-config>
+
+        <!--配置四项基本属性 -->
+        <property name="driverClass">com.mysql.jdbc.Driver</property>
+        <property name="jdbcUrl">jdbc:mysql:///simpleShop</property>
+        <property name="user">root</property>
+        <property name="password">chenfeng980320</property>
+        <!-- 如果数据库中的数据一次不够的话增长几个 -->
+        <!--<property name="acquireIncrement">5</property>-->
+        <!--&lt;!&ndash; 初始化连接数 &ndash;&gt;-->
+        <!--<property name="initialPoolSize">20</property>-->
+        <!--&lt;!&ndash; 最小剩余连接数&ndash;&gt;-->
+        <!--<property name="minPoolSize">10</property>-->
+        <!--&lt;!&ndash;最大剩余连接数 &ndash;&gt;-->
+        <!--<property name="maxPoolSize">30</property>-->
+        <!--&lt;!&ndash; JDBC标准参数 用于控制数据源中加载的PrepareStatements的数目 &ndash;&gt;-->
+        <!--<property name="maxStatements">0</property>-->
+        <!--&lt;!&ndash; 连接池内单个连接拥有的最大缓存statements数目 &ndash;&gt;-->
+        <!--<property name="maxStatementsPerConnection">5</property>-->
+    </default-config>
+</c3p0-config>
