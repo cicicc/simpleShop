@@ -16,10 +16,10 @@ public class UserDaoImpl implements UserDao {
         //创建queryRunner对象
         QueryRunner queryRunner = new QueryRunner(DataSourceUtils.getDataSource());
         //书写SQL语句
-        String sql = "insert into User(id,username,password,name,emil,birthday,sex) values(?,?,?,?,?,?,?)";
+        String sql = "insert into User(uid,username,password,name,email,birthday,sex,state,code) values(?,?,?,?,?,?,?,?,?)";
 
         queryRunner.update(sql, user.getUid(), user.getUsername(), user.getPassword(), user.getName(), user.getEmail(),
-                user.getBirthday(), user.getSex());
+                user.getBirthday(), user.getSex(), user.getState(),user.getCode());
 
     }
 

@@ -37,6 +37,8 @@ public class UserServlet extends BaseServlet {
         Map<String, String[]> parameters = request.getParameterMap();
         User user = MyBeanUtils.populate(User.class, parameters);
         user.setUid(UUIDUtils.getUUID());
+        user.setState(0);//是否被激活 0 未激活 1 激活
+        user.setCode(UUIDUtils.getUUID64());//64位激活码
         userService.register(user);
 
 
