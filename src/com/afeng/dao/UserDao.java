@@ -10,4 +10,6 @@ public interface UserDao {
     User verifyUsername(String username) throws SQLException;
 
     Integer active(String activeCode) throws SQLException;
+
+    User login(User user) throws SQLException;
 }

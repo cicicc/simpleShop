@@ -46,4 +46,18 @@ public class UserDaoImpl implements UserDao {
         int updateRes = queryRunner.update(sql, activeCode);
         return updateRes;
     }
+
+    @Override
+    public User login(User user) throws SQLException {
+        //根据service层传递过来的数据去数据库中进行查询
+        //创建queryRunner对象
+        QueryRunner queryRunner = new QueryRunner(DataSourceUtils.getDataSource());
+        //书写SQL语句
+        String sql = "select * from user where username=? and password=?";
+        //执行查询方法
+        User userRes = queryRunner.query(sql, new BeanHandler<>(User.class), user.getUsername(), user.getPassword());
+
+        return userRes;
+    }
+
 }

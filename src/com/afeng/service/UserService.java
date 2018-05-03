@@ -9,4 +9,6 @@ public interface UserService {
     User verifyUsername(String username);
 
     Integer active(String activeCode);
+
+    User login(User user);
 }

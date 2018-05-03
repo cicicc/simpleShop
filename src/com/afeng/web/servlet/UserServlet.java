@@ -59,4 +59,25 @@ public class UserServlet extends BaseServlet {
         return "adviceUserActivate.jsp";
     }
 
+    public String login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //获取用户输入的登录信息 包括用户名和登录密码
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        //将数据封装带对象中去
+        User user = MyBeanUtils.populate(User.class, parameterMap);
+        //将用户信息传递到service层对象中 并且对返回值进行判断
+        //如果用户输入的信息在数据库中有对应的user对象的话 那么就转到首页 否则就转到当前页面
+        //注:转发到当前页面的时候记得如果将用户输入的用户名回写到输入框中
+        User userRes =userService.login(user);
+        if (userRes != null) {
+            //查询到了用户信息的话就将用户信息放入session域中 表示用户已经登录 并将页面重定向到首页
+            request.getSession().setAttribute("loginUser",userRes);
+            response.sendRedirect(request.getContextPath()+"index.jsp");
+            return null;
+        }else{
+            //若用户输入的个人信息无法在数据库中得到相匹配的结果的话 就转发到登录页面提示用户信息输入错误 并回写用户名
+            request.setAttribute("msg","用户名或密码错误,请重新登陆");
+            request.setAttribute("username",user.getUsername());
+        }
+        return "login.jsp";
+    }
 }

@@ -46,4 +46,17 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public User login(User user) {
+        //调用dao层查询数据库 处理异常
+        User userRes = null;
+        try {
+            userRes = userDao.login(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //将查询得来的user对象返回
+        return userRes;
+    }
 }
