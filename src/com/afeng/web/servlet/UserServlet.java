@@ -3,6 +3,7 @@ package com.afeng.web.servlet;
 import com.afeng.domain.User;
 import com.afeng.service.UserService;
 import com.afeng.service.impl.UserServiceImpl;
+import com.afeng.utils.MailUtils;
 import com.afeng.utils.MyBeanUtils;
 import com.afeng.utils.UUIDUtils;
 import com.afeng.web.base.BaseServlet;
@@ -31,7 +32,7 @@ public class UserServlet extends BaseServlet {
         response.getWriter().println(verifyRes);
     }
 
-    public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //register
         //首先获取用户在页面上输入的注册信息
         Map<String, String[]> parameters = request.getParameterMap();
@@ -39,10 +40,23 @@ public class UserServlet extends BaseServlet {
         user.setUid(UUIDUtils.getUUID());
         user.setState(0);//是否被激活 0 未激活 1 激活
         user.setCode(UUIDUtils.getUUID64());//64位激活码
-        userService.register(user);
-
-
+        //调用service层方法 执行注册
+        //如果service层的方法返回的结果是1,表示注册成功 则调用邮件发送
+        int registerRes = userService.register(user);
+        //是否注册成功
+        if (registerRes == 1) {
+            //发送激活邮件
+            String emailMsg = "恭喜您注册成功，请点击下面的连接进行激活账户"
+                    + "<a href='http://localhost/active?activeCode=" + user.getCode() + "'>"
+                    + "http://localhost/active?activeCode=" + user.getCode()  + "</a>";
+            try {
+                MailUtils.sendMail(user.getEmail(), emailMsg);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        //用户注册以后应该尝试跳转页面 提醒用户点击邮箱地址 实现注册
+        return "adviceUserActivate.jsp";
     }
-
 
 }

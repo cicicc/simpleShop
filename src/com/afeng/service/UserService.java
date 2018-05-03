@@ -4,7 +4,9 @@ import com.afeng.domain.User;
 
 
 public interface UserService {
-    void register(User user) ;
+    int register(User user) ;
 
     User verifyUsername(String username);
+
+    Integer active(String activeCode);
 }

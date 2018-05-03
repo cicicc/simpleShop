@@ -24,6 +24,14 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>com.afeng.web.servlet.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActiveServlet</servlet-name>
+        <servlet-class>com.afeng.web.servlet.ActiveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ActiveServlet</servlet-name>
+        <url-pattern>/active</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/userServlet</url-pattern>

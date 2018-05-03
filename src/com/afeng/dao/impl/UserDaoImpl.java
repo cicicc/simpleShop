@@ -12,15 +12,16 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void register(User user) throws SQLException {
+    public int register(User user) throws SQLException {
         //创建queryRunner对象
         QueryRunner queryRunner = new QueryRunner(DataSourceUtils.getDataSource());
         //书写SQL语句
         String sql = "insert into User(uid,username,password,name,email,birthday,sex,state,code) values(?,?,?,?,?,?,?,?,?)";
-
-        queryRunner.update(sql, user.getUid(), user.getUsername(), user.getPassword(), user.getName(), user.getEmail(),
-                user.getBirthday(), user.getSex(), user.getState(),user.getCode());
-
+        //执行插入语句 并将成功与否的结果返回service层对象
+        int registerRes = queryRunner.update(sql, user.getUid(), user.getUsername(), user.getPassword(), user.getName(), user.getEmail(),
+                user.getBirthday(), user.getSex(), user.getState(), user.getCode());
+        //System.out.println(registerRes);
+        return registerRes;
     }
 
     @Override
@@ -33,5 +34,16 @@ public class UserDaoImpl implements UserDao {
         User user = queryRunner.query(sql, new BeanHandler<>(User.class), username);
         //System.out.println(user);
         return user;
+    }
+
+    @Override
+    public Integer active(String activeCode) throws SQLException {
+        //创建queryRunner对象
+        QueryRunner queryRunner = new QueryRunner(DataSourceUtils.getDataSource());
+        //书写SQL语句
+        String sql = "update user set state=1 where code=?";
+        //执行SQL语句 将状态设为1 这样便激活了用户
+        int updateRes = queryRunner.update(sql, activeCode);
+        return updateRes;
     }
 }

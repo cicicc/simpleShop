@@ -136,10 +136,10 @@ font {
 						<label for="inlineRadio1" class="col-sm-2 control-label" >性别</label>
 						<div class="col-sm-6">
 							<label class="radio-inline" > <input type="radio"
-								name="sex" id="inlineRadio1" value="option1">
+								name="sex" id="inlineRadio1" value="男">
 								男
 							</label> <label class="radio-inline"> <input type="radio"
-								name="sex" id="inlineRadio2" value="option2">
+								name="sex" id="inlineRadio2" value="女">
 								女
 							</label>
 						</div>
