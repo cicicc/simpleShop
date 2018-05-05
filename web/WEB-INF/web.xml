@@ -8,6 +8,14 @@
         <filter-name>EncodingFilter</filter-name>
         <filter-class>com.afeng.web.filter.EncodingFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.afeng.web.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -28,6 +36,23 @@
         <servlet-name>ActiveServlet</servlet-name>
         <servlet-class>com.afeng.web.servlet.ActiveServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>com.afeng.web.servlet.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>com.afeng.web.servlet.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/category</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ActiveServlet</servlet-name>
         <url-pattern>/active</url-pattern>

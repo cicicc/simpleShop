@@ -27,6 +27,7 @@ public class BaseServlet extends HttpServlet {
             //判断这个jsp路径是否为空 如果不为空的话 就将请求转发过去
             if (jspPath != null) {
                 request.getRequestDispatcher(request.getContextPath()+"/"+jspPath).forward(request, response);
+                return;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

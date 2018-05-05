@@ -18,7 +18,6 @@ public class CookieUtils {
                 }
             }
         }
-
         return userInfo;
     }
 }

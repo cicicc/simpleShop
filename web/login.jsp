@@ -67,9 +67,9 @@ font {
 							<div class="col-sm-6">
 								<input type="password" class="form-control" name="password"
 									placeholder="请输入密码">
-
 							</div>
 						</div>
+						<div style="color: #f00;text-indent:75px;" >${requestScope.msg}</div>
 						<div class="form-group">
 							<label for="inputPassword3" class="col-sm-2 control-label">验证码</label>
 							<div class="col-sm-3">
@@ -83,7 +83,7 @@ font {
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
 								<div class="checkbox">
-									<label> <input type="checkbox"> 自动登录
+									<label> <input type="checkbox" name="autoLogin" > 自动登录
 									</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label> <input
 										type="checkbox"> 记住用户名
 									</label>

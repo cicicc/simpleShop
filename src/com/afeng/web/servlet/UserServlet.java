@@ -3,12 +3,14 @@ package com.afeng.web.servlet;
 import com.afeng.domain.User;
 import com.afeng.service.UserService;
 import com.afeng.service.impl.UserServiceImpl;
+import com.afeng.utils.CookieUtils;
 import com.afeng.utils.MailUtils;
 import com.afeng.utils.MyBeanUtils;
 import com.afeng.utils.UUIDUtils;
 import com.afeng.web.base.BaseServlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,6 +20,9 @@ public class UserServlet extends BaseServlet {
 
     private UserService userService = new UserServiceImpl();
 
+    /**
+     * 校验用户名方法
+     */
     public void checkUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //设置verifyRes 如果数据库中存在此用户名 那么就告知用户此用户名已经被占用 否则就可以让用户使用此用户名
         int verifyRes = -1;
@@ -32,6 +37,9 @@ public class UserServlet extends BaseServlet {
         response.getWriter().println(verifyRes);
     }
 
+    /**
+     * 用户注册方法
+     */
     public String register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //register
         //首先获取用户在页面上输入的注册信息
@@ -59,6 +67,9 @@ public class UserServlet extends BaseServlet {
         return "adviceUserActivate.jsp";
     }
 
+    /**
+     *用户登录的方法
+     */
     public String login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //获取用户输入的登录信息 包括用户名和登录密码
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -71,13 +82,47 @@ public class UserServlet extends BaseServlet {
         if (userRes != null) {
             //查询到了用户信息的话就将用户信息放入session域中 表示用户已经登录 并将页面重定向到首页
             request.getSession().setAttribute("loginUser",userRes);
-            response.sendRedirect(request.getContextPath()+"index.jsp");
-            return null;
+            //用户登陆成功以后判断用户是否勾选了自动登录 如果勾选的话 就将用户信息存放在cookie中
+            String autoLogin = request.getParameter("autoLogin");//on表示选择了自动登录
+            //System.out.println("autoLogin"+autoLogin);
+            if (autoLogin.equals("on")) {
+                //选择了自动登录的话就吧用户信息存放在cookie中
+                Cookie autoLoginCookie = new Cookie("autoLogin", userRes.getUsername()+"@"+userRes.getPassword());
+                autoLoginCookie.setPath("/");
+                autoLoginCookie.setMaxAge(60*60*24*7);
+                response.addCookie(autoLoginCookie);
+                return "index.jsp";
+                //重定向到首页
+                //response.sendRedirect(request.getContextPath()+"/index.jsp");
+            }//没有的话就什么都不做
         }else{
             //若用户输入的个人信息无法在数据库中得到相匹配的结果的话 就转发到登录页面提示用户信息输入错误 并回写用户名
-            request.setAttribute("msg","用户名或密码错误,请重新登陆");
+            request.setAttribute("msg","用户名或密码错误");
             request.setAttribute("username",user.getUsername());
         }
         return "login.jsp";
+    }
+
+    /**
+     *用户退出登录的方法
+     */
+
+    public void exitLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //无需访问service层 因为并不需要访问数据库
+        //首先先判断一下服务器中这个session是否存在
+        Object loginUser = request.getSession().getAttribute("loginUser");
+        if (loginUser != null) {
+            //如果为空就不用移除 直接跳转到首页就可以了 因为session中已经没有这个对象啦
+            request.getSession().removeAttribute("loginUser");
+        }
+        //覆盖cookie路径中的同名cookie
+        Cookie cookie = new Cookie("autoLogin", "");
+        cookie.setPath("/");
+        cookie.setMaxAge(60*60*24*7);
+        response.addCookie(cookie);
+        //思考:这里用重定向似乎更加合理
+        //return "index.jsp";
+        //重定向到首页
+        response.sendRedirect(request.getContextPath()+"/index.jsp");
     }
 }

@@ -1,6 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<script type="text/javascript">
+	<%--jquerypost语法实例
+		$.post("test.php", { name: "John", time: "2pm" },
+		   function(data){
+			 alert("Data Loaded: " + data);
+   });--%>
+	$(function () {
+        var url = "${pageContext.request.contextPath}/category";
+        var content = "";
+        $.post(url,{"method":"findAll"},function(data){
+             //alert(data[1]);
+            for (var i = 0; i < data.length; i++) {
+                content=content+"<li><a href='#'>"+data[i].cname+"</a></li>";
+            }
+            $("#category_menu").html(content);
+		},
+		"json"
+		);
+    });
+
+</script>
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
 	<div class="col-md-4">
@@ -11,10 +33,18 @@
 	</div>
 	<div class="col-md-3" style="padding-top:20px">
 		<ol class="list-inline">
+			<c:if test="${empty loginUser}" >
 			<li><a href="login.jsp">登录</a></li>
 			<li><a href="register.jsp">注册</a></li>
-			<li><a href="cart.jsp">购物车</a></li>
+
+			</c:if>
+			<c:if test="${not empty loginUser}">
+			<li style="color: #012F68">欢迎您:</li>
+			<li><a href="#">${pageContext.session.getAttribute("loginUser").username}</a></li>
+			<li><a href="${pageContext.request.contextPath}/userServlet?method=exitLogin">退出</a></li>
+			</c:if>
 			<li><a href="order_list.jsp">我的订单</a></li>
+			<li><a href="login.jsp">购物车</a></li>
 		</ol>
 	</div>
 </div>
@@ -35,11 +65,11 @@
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="product_list.htm">手机数码<span class="sr-only">(current)</span></a></li>
-					<li><a href="#">电脑办公</a></li>
-					<li><a href="#">电脑办公</a></li>
-					<li><a href="#">电脑办公</a></li>
+				<ul class="nav navbar-nav" id="category_menu">
+					<%--<li class="active"><a href="product_list.htm">手机数码<span class="sr-only">(current)</span></a></li>--%>
+					<%--<li><a href="#">电脑办公</a></li>--%>
+					<%--<li><a href="#">电脑办公</a></li>--%>
+					<%--<li><a href="#">电脑办公</a></li>--%>
 				</ul>
 				<form class="navbar-form navbar-right" role="search">
 					<div class="form-group">
