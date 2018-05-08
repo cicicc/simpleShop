@@ -25,7 +25,7 @@ public class Product implements Serializable {
     private String pname;
     private Integer market_price;
     private Integer shop_price;
-    private Data pdate;
+    private String pdate;
     private Integer is_hot;
     private String pimage;
     private String pdesc;
@@ -67,11 +67,11 @@ public class Product implements Serializable {
         this.shop_price = shop_price;
     }
 
-    public Data getPdate() {
+    public String getPdate() {
         return pdate;
     }
 
-    public void setPdate(Data pdate) {
+    public void setPdate(String pdate) {
         this.pdate = pdate;
     }
 

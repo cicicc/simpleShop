@@ -14,7 +14,7 @@
         $.post(url,{"method":"findAll"},function(data){
              //alert(data[1]);
             for (var i = 0; i < data.length; i++) {
-                content=content+"<li><a href='#'>"+data[i].cname+"</a></li>";
+                content=content+"<li><a href='${pageContext.request.contextPath}/product?method=findByCid&cid='+data[i].cid>"+data[i].cname+"</a></li>";
             }
             $("#category_menu").html(content);
 		},
@@ -44,7 +44,7 @@
 			<li><a href="${pageContext.request.contextPath}/userServlet?method=exitLogin">退出</a></li>
 			</c:if>
 			<li><a href="order_list.jsp">我的订单</a></li>
-			<li><a href="login.jsp">购物车</a></li>
+			<li><a href="cart.jsp">购物车</a></li>
 		</ol>
 	</div>
 </div>

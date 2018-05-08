@@ -14,6 +14,7 @@ import java.util.List;
 public class ProductServlet extends BaseServlet {
     private ProductService productService = new ProductServiceImpl();
 
+
     /**
      *查询热门商品,并将数据集合放入request域中
      * 名称hotProductList
@@ -34,4 +35,5 @@ public class ProductServlet extends BaseServlet {
         //将对象放入request域中
         request.setAttribute("newProductList",newProductList);
     }
+
 }

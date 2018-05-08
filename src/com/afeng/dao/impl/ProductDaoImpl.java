@@ -5,6 +5,7 @@ import com.afeng.domain.Product;
 import com.afeng.utils.DataSourceUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.List;

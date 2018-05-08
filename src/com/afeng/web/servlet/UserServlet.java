@@ -91,7 +91,7 @@ public class UserServlet extends BaseServlet {
                 autoLoginCookie.setPath("/");
                 autoLoginCookie.setMaxAge(60*60*24*7);
                 response.addCookie(autoLoginCookie);
-                return "index.jsp";
+                return "default.jsp";
                 //重定向到首页
                 //response.sendRedirect(request.getContextPath()+"/index.jsp");
             }//没有的话就什么都不做
@@ -123,6 +123,6 @@ public class UserServlet extends BaseServlet {
         //思考:这里用重定向似乎更加合理
         //return "index.jsp";
         //重定向到首页
-        response.sendRedirect(request.getContextPath()+"/index.jsp");
+        response.sendRedirect(request.getContextPath()+"/default.jsp");
     }
 }
