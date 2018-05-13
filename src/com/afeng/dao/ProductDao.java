@@ -9,4 +9,8 @@ public interface ProductDao {
     List<Product> findByHot() throws SQLException;
 
     List<Product> findByNew() throws SQLException;
+
+    List<Product> findByCid( String cid) throws SQLException;
+
+    Product findByPid(String pid) throws SQLException;
 }

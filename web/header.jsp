@@ -14,7 +14,8 @@
         $.post(url,{"method":"findAll"},function(data){
              //alert(data[1]);
             for (var i = 0; i < data.length; i++) {
-                content=content+"<li><a href='${pageContext.request.contextPath}/product?method=findByCid&cid='+data[i].cid>"+data[i].cname+"</a></li>";
+                var categoryUrl = "${pageContext.request.contextPath}/product?method=findByCid&cid="+data[i].cid
+                content=content+"<li><a href="+categoryUrl+">"+data[i].cname+"</a></li>";
             }
             $("#category_menu").html(content);
 		},

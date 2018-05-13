@@ -8,4 +8,8 @@ public interface ProductService {
     List<Product> findByHot();
 
     List<Product> findByNew();
+
+    List<Product> findByCid( String cid);
+
+    Product findByPid(String pid);
 }

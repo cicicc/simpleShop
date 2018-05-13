@@ -13,7 +13,6 @@ public class CategoryDaoImpl implements CategoryDao {
     /**
      * 查询所有的商品分类信息并以category对象的形式返回
      * @return 商品分类信息
-     * @throws SQLException
      */
     @Override
     public List<Category> findAll() throws SQLException {
@@ -22,7 +21,6 @@ public class CategoryDaoImpl implements CategoryDao {
         //书写sql语句
         String sql = "select * from category";
         //执行查询语句 并将所得的对象进行返回
-        List<Category> categoryList = queryRunner.query(sql, new BeanListHandler<>(Category.class));
-        return categoryList;
+        return queryRunner.query(sql, new BeanListHandler<>(Category.class));
     }
 }
