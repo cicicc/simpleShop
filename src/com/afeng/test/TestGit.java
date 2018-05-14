@@ -6,4 +6,10 @@ public class TestGit {
     public void testGit(){
         System.out.println("Hello git");
     }
+    @Test
+    public void sum(){
+        int i =5;
+        int j=10;
+        System.out.println(i + ~j);
+    }
 }

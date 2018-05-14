@@ -4,14 +4,14 @@ import com.afeng.dao.ProductDao;
 import com.afeng.dao.impl.ProductDaoImpl;
 import com.afeng.domain.Product;
 import com.afeng.service.ProductService;
+import com.afeng.domain.PageBean;
 
 import java.sql.SQLException;
 import java.util.List;
 //这个service层中所有方法都没有使用事务
 public class ProductServiceImpl implements ProductService {
-    ProductDao productDao = new ProductDaoImpl();
+   private ProductDao productDao = new ProductDaoImpl();
     /**
-     * 开启事务
      * 调用dao层 根据数据是否有热门标记获取商品
      * 并处理异常
      * @return 查询到的商品list
@@ -28,7 +28,6 @@ public class ProductServiceImpl implements ProductService {
         return productList;
     }
     /**
-     * 开启事务
      * 调用dao层 根据数据上架日期获取最新商品
      * 并处理异常
      * @return 查询到的商品list
@@ -49,18 +48,28 @@ public class ProductServiceImpl implements ProductService {
      * 调用dao层 通过对象所属的分类查询对应的商品
      * 并处理异常
      * @param cid Category的id
-     * @return 查询到的商品list
+     * @param pageNumber 当前页的页码数
+     * @param pageSize 每页显示数据的数目
+     * @return 查询到的商品list 封装为pageBean
      */
     @Override
-    public List<Product> findByCid( String cid) {
+    public PageBean<Product> findByCid(String cid, int pageNumber, int pageSize) {
         //调用dao层方法并捕获异常
-        List<Product> productList = null;
+       int totalRecord;
+        PageBean<Product> productPageBean =null;
         try {
-            productList = productDao.findByCid(cid);
+            //获取总记录数
+            totalRecord = productDao.findByCid(cid);
+            //创建pageBean对象
+             productPageBean = new PageBean<>(pageNumber, pageSize, totalRecord);
+            //将数据进行分页 并且把数据放在pageBean对象的list中去
+            List<Product> productList =productDao.findAllByCid(cid, productPageBean.getStartIndex(), productPageBean.getPageSize());
+            System.out.println(productList);
+            productPageBean.setData(productList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return productList;
+        return productPageBean;
     }
     /**
      * 调用dao层 通过对象所属的id查询到对应的商品
