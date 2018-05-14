@@ -26,6 +26,7 @@ public class ProductServlet extends BaseServlet {
         //如果在处理过程中出现异常 要么是页面没有传递值过来 要么是传递出错 那么就使用默认值1
         try{
          pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+            System.out.println(pageNumber);
         }catch (Exception e){
         }
         int pageSize = 12;//默认每页最多显示12个

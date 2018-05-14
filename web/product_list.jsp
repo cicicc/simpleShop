@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,12 +41,16 @@ body {
 			</ol>
 		</div>
 		<c:forEach var="product" items="${pageBean.data}">
-			<div class="col-md-2">
-				<a href="product_info.htm"> <img src="${product.pimage}"
-					width="170" height="170" style="display: inline-block;">
+			<div class="col-md-2" style="height: 280px">
+				<a href="${pageContext.request.contextPath}/product?method=findByPid&pid=${product.pid}"> <img src="${product.pimage}"
+					width="180" height="200" style="display: inline-block;">
 				</a>
 				<p>
-					<a href="product_info.html" style='color: green'>${product.pname}</a>
+					<a href="${pageContext.request.contextPath}/product?method=findBypid&pid=${product.pid}" style='color: green'>
+							<c:if test="${fn:length(product.pname) lt 18}">${product.pname}</c:if>
+							<c:if test="${fn:length(product.pname) gt 18}">${fn:substring(product.pname,0,25)}...</c:if>
+
+					</a>
 				</p>
 				<p>
 					<font color="#FF0000">商城价：&yen;${product.shop_price}</font>
@@ -61,15 +66,14 @@ body {
 		<ul class="pagination" style="text-align: center; margin-top: 10px;">
 			<li class="disabled"><a href="#" aria-label="Previous"><span
 					aria-hidden="true">&laquo;</span></a></li>
-			<li class="active"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">6</a></li>
-			<li><a href="#">7</a></li>
-			<li><a href="#">8</a></li>
-			<li><a href="#">9</a></li>
+            <c:forEach begin="1" end="${pageBean.totalPage}" var="i">
+                <c:if test="${pageBean.pageNumber == i}" >
+			    <li class="active"><a href="#">${i}</a></li>
+                </c:if>
+                <c:if test="${pageBean.pageNumber != i}" >
+                    <li ><a href="${pageContext.request.contextPath}/product?method=findByCid&cid=${pageBean.data[1].cid}&pageNumber=${i}">${i}</a></li>
+                </c:if>
+            </c:forEach>
 			<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 			</a></li>
 		</ul>

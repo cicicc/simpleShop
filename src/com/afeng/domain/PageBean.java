@@ -63,9 +63,9 @@ public class PageBean<T> {
         this.pageSize = pageSize;
         this.totalRecord = totalRecord;
         //如果是默认值的话 那么页数即等于记录数 否则就向上取整
-        this.totalPage = (this.totalRecord + this.pageNumber - 1) / this.pageSize;
+        this.totalPage = (int) Math.ceil(this.totalRecord*1.0/this.pageSize);
         //起始索引
-        this.startIndex =(this.pageNumber-1)*this.pageSize+1;
+        this.startIndex = (this.pageNumber - 1) * this.pageSize + 1;
 
 
     }

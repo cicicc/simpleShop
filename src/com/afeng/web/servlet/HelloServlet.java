@@ -1,10 +1,12 @@
 package com.afeng.web.servlet;
 
+import com.afeng.domain.Cart;
 import com.afeng.web.base.BaseServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class HelloServlet extends BaseServlet {
@@ -22,5 +24,10 @@ public class HelloServlet extends BaseServlet {
         System.out.println("Hello servlet ");
 
         return "testJsp/hello.jsp";
+    }
+    public void testSession(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Cart cart = (Cart) session.getAttribute("cart");
+        System.out.println(cart);
     }
 }
