@@ -62,6 +62,10 @@ public class Cart  implements Serializable {
         cartItemMap.clear();
     }
 
+    /**
+     * cart的tostring方法
+     * @return
+     */
     @Override
     public String toString() {
         return "Cart{" +
